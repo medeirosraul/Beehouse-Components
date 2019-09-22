@@ -1,0 +1,49 @@
+﻿@page "/"
+
+<h1>Beehouse Web Components</h1>
+
+Veja abaixo todos os componentes inclusos na biblioteca Beehouse.Web.Component.
+
+<hr />
+
+<h4>Componente padrão</h4>
+<Component1></Component1>
+
+<hr />
+
+<h4>Layout</h4>
+
+<hr />
+
+<h4>Buttons</h4>
+<Button>Default</Button>
+<Button Style="ElementStyle.Primary">Primary</Button>
+<Button Style="ElementStyle.Secondary">Secondary</Button>
+<Button Style="ElementStyle.Info">Info</Button>
+<Button Style="ElementStyle.Success">Success</Button>
+<Button Style="ElementStyle.Warning">Warning</Button>
+<Button Style="ElementStyle.Danger">Danger</Button>
+<Button Style="ElementStyle.Light">Light</Button>
+<Button Style="ElementStyle.Dark">Dark</Button>
+
+<hr />
+
+<h4>Forms</h4>
+
+<Form Model="FormOne" Title="Form Title">
+    <Input @bind-Value="FormOne.InputText" Label="Input Text" />
+    <Input @bind-Value="FormOne.InputNumber" Label="Input Number" />
+</Form>
+
+@code{
+    [Parameter] public FormOneViewModel FormOne { get; set; }
+
+    protected override void OnInitialized()
+    {
+        FormOne = new FormOneViewModel
+        {
+            InputText = "Value of input text.",
+            InputNumber = "123456789"
+        };
+    }
+}
