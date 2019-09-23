@@ -1,0 +1,24 @@
+﻿<button class="btn @GetStyle()" @onclick="OnClick">@ChildContent</button>
+
+@code {
+    [Parameter] public ElementStyle Style { get; set; } = ElementStyle.Primary;
+    [Parameter] public ElementSize Size { get; set; } = ElementSize.Medium;
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    private string GetStyle()
+    {
+        switch (Style)
+        {
+            case ElementStyle.Primary: return "btn-primary";
+            case ElementStyle.Secondary: return "btn-secondary";
+            case ElementStyle.Info: return "btn-info";
+            case ElementStyle.Success: return "btn-success";
+            case ElementStyle.Warning: return "btn-warning";
+            case ElementStyle.Danger: return "btn-danger";
+            case ElementStyle.Light: return "btn-light";
+            case ElementStyle.Dark: return "btn-dark";
+            default: return "btn-primary";
+        }
+    }
+}

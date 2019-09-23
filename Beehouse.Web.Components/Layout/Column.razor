@@ -1,0 +1,8 @@
+﻿<div class="col-@Size">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public int Size { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

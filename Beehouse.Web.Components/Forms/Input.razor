@@ -1,0 +1,26 @@
+﻿@using Beehouse.Web.Components.Common
+@using System.Linq.Expressions
+
+<div class="form-group">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label class="col-form-label">@Label</label>
+    }
+    @if(Type == ElementValueType.Text)
+    {
+        <InputText class="form-control" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"></InputText>
+    }else if(Type == ElementValueType.Number)
+    {
+        <InputNumber class="form-control" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"></InputNumber>
+    }
+</div>
+
+@code {
+
+    [Parameter] public string Label { get; set; }
+    [Parameter] public string Value { get; set; }
+    [Parameter] public ElementValueType Type { get; set; }
+
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public Expression<Func<string>> ValueExpression { get; set; }
+}

@@ -1,0 +1,17 @@
+﻿<div class="container container-fluid">
+    @if (string.IsNullOrWhiteSpace(Title))
+    {
+        <Row>
+            <Column Size="12">
+                <h4>@Title</h4>
+            </Column>
+        </Row>
+    }
+
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

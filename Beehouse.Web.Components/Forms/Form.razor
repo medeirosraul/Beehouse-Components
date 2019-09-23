@@ -1,0 +1,25 @@
+﻿@typeparam TModel
+
+<Row>
+    <Column Size="12">
+        <EditForm Model="@Model">
+            @if (!string.IsNullOrEmpty(Title))
+            {
+                <h5>@Title</h5>
+            }
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+
+            @ChildContent
+        </EditForm>
+    </Column>
+</Row>
+
+@code {
+    [Parameter] public TModel Model { get; set; }
+    [Parameter] public string Title { get; set; }
+
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}
