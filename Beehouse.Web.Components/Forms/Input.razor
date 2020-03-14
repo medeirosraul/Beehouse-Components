@@ -1,26 +1,39 @@
 ﻿@using Beehouse.Web.Components.Common
 @using System.Linq.Expressions
 
-<div class="form-group">
+<div class="form-group row @(Hidden ? "d-none" :  "")">
     @if (!string.IsNullOrWhiteSpace(Label))
     {
-        <label class="col-form-label">@Label</label>
+        <label class="col-form-label col-sm-4 col-lg-3 col-xl-2 text-right">@Label</label>
     }
-    @if(Type == ElementValueType.Text)
-    {
-        <InputText class="form-control" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"></InputText>
-    }else if(Type == ElementValueType.Number)
-    {
-        <InputNumber class="form-control" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"></InputNumber>
-    }
+    <div class="col-sm-8 col-lg-6 col-xl-5">
+
+        @if (Type == ElementValueType.Text)
+        {
+            <InputText class="form-control" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"  @attributes="InputAttributes"></InputText>
+        }
+        else if (Type == ElementValueType.Number)
+        {
+            <InputText class="form-control number" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"  @attributes="InputAttributes"></InputText>
+        }
+        else if(Type == ElementValueType.Money)
+        {
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">R$</div>
+                </div>
+                <InputText class="form-control money" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"  @attributes="InputAttributes"></InputText>
+            </div>
+        }
+    </div>
 </div>
 
 @code {
-
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> InputAttributes { get; set; }
     [Parameter] public string Label { get; set; }
     [Parameter] public string Value { get; set; }
     [Parameter] public ElementValueType Type { get; set; }
-
+    [Parameter] public bool Hidden { get; set; } = false;
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
     [Parameter] public Expression<Func<string>> ValueExpression { get; set; }
 }

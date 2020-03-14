@@ -1,0 +1,35 @@
+﻿@inject Microsoft.JSInterop.IJSRuntime JSRuntime
+
+<div id="@Id" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-@Id-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modal-@Id-label" class="modal-title">@Title</h5>
+                <button @onclick="@ButtonExitClicked" type="button" class="close" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>@Message</p>
+                @ChildContent
+            </div>
+            <div class="modal-footer">
+                @if (Type == ModalTypes.OkCancel || Type == ModalTypes.NoYes)
+                {
+                    <button @onclick="@ButtonCancelClicked" type="button" class="btn btn-secondary">Cancelar</button>
+                }
+
+                @if (Type == ModalTypes.Ok || Type == ModalTypes.OkCancel)
+                {
+                    <button @onclick="@ButtonOkClicked" type="button" class="btn btn-primary">Ok</button>
+                }
+
+                @if (Type == ModalTypes.NoYes)
+                {
+                    <button @onclick="@ButtonNoClicked" type="button" class="btn btn-danger">Não</button>
+                    <button @onclick="@ButtonYesClicked" type="button" class="btn btn-primary">Sim</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

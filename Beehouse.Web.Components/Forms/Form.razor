@@ -1,25 +1,44 @@
 ﻿@typeparam TModel
 
-<Row>
-    <Column Size="12">
-        <EditForm Model="@Model">
-            @if (!string.IsNullOrEmpty(Title))
-            {
-                <h5>@Title</h5>
-            }
-            <DataAnnotationsValidator/>
-            <ValidationSummary/>
+<EditForm Model="@Model" OnValidSubmit="@OnValidSubmit">
+    @if(Type == FormType.Default)
+    {
+        <Row>
+            <Column Size="12">
+                @if (!string.IsNullOrEmpty(Title))
+                {
+                    <h5>@Title</h5>
+                }
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-            @ChildContent
-        </EditForm>
-    </Column>
-</Row>
+                @ChildContent
+            </Column>
+        </Row>
+    }
+    else if(Type == FormType.Card)
+    {
+        <Card Title="@Title">
+            <Body>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                @CardBody
+            </Body>
+            <Footer>@CardFooter</Footer>
+        </Card>
+    }
+    else if (Type == FormType.Popup)
+    {
+        //Implement
+    }
+</EditForm>
 
 @code {
     [Parameter] public TModel Model { get; set; }
     [Parameter] public string Title { get; set; }
-
-    [Parameter] public EventCallback OnValidSubmit { get; set; }
-
+    [Parameter] public FormType Type { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment CardBody { get; set; }
+    [Parameter] public RenderFragment CardFooter { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
 }

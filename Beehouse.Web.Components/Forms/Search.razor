@@ -1,0 +1,46 @@
+﻿@typeparam TModel
+
+<div class="form-group row search">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label class="col-form-label col-sm-4 col-lg-3 col-xl-2 text-right">@Label</label>
+    }
+    <div class="col-sm-8 col-lg-6 col-xl-5">
+        <InputText class="form-control wait-onchange" @bind-Value="@Term" @oninput="@OnInput" @onfocusin="@OnFocusIn" @onfocusout="@OnFocusOut"></InputText>
+        <small class="form-text text-muted">Digite o termo da busca</small>
+        <div class="@(_listVisible ? "visible" : "invisible")" style="overflow:visible; height:5px;">
+            <div class="list-group search-result">
+                @if (_loading)
+                {
+                    <a class="list-group-item" disabled>carregando...</a>
+                }
+                else if (Context == null || Context.Count == 0)
+                {
+                    <a class="list-group-item" disabled>nenhum item encontrado com o termo "@Term"</a>
+                }
+                else
+                {
+                    @foreach (var item in Context)
+                    {
+                        <a href="#" class="list-group-item list-group-item-action" @onclick="@(async (e) => await ItemSelected(item))" @onclick:preventDefault>@ItemTemplate(item)</a>
+                    }
+                    <div class="list-group-item">
+                        <Button Size="ElementSize.Small" Style="ElementStyle.Danger" OnClick="@OnCancelClick" type="button">Cancelar</Button>
+                    </div>
+                }
+            </div>
+        </div>
+        @if (Selected != null && Selected.Count > 0){
+            <ul class="list-group">
+                @foreach (var item in Selected)
+                {
+                    <li class="list-group-item">
+                        @ItemTemplate(item)
+                        <Button Size="ElementSize.Small" Style="ElementStyle.Danger" OnClick="@(async () => await RemoveSelectedClicked(item))" type="button">Remover</Button>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+</div>

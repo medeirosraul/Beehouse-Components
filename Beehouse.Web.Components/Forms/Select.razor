@@ -1,0 +1,97 @@
+﻿@using Beehouse.Web.Components.Common
+@using System.Linq.Expressions
+@using System.Timers
+@typeparam TItem
+<div class="form-group row">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label class="col-form-label col-sm-4 col-lg-3 col-xl-2 text-right">@Label</label>
+    }
+    <div class="col-sm-8 col-lg-6 col-xl-5">
+        <InputText class="form-control wait-onchange" @bind-Value="@Term" @oninput="@OnTermChanged"></InputText>
+        <small class="form-text text-muted">Digite o termo da busca</small>
+        <div class="@(optionsVisible ? "visible" : "invisible")" style="overflow:visible; height:5px;">
+            <div class="list-group" >
+                @if (loading)
+                {
+                    <a class="list-group-item" style="z-index:2000" disabled>loading...</a>
+                }
+                else if (List == null)
+                {
+                    <a class="list-group-item" style="z-index:2000" disabled>nenhum item disponível para seleção</a>
+                }
+                else
+                {
+                    @foreach (var item in List)
+                    {
+                        <a href="#" class="list-group-item list-group-item-action" style="z-index:2000" @onclick="@(async (e) => await ChangeItem(item))" @onclick:preventDefault>@ItemTemplate(item)</a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; }
+
+    [Parameter] public string Term { get; set; }
+    [Parameter] public EventCallback<string> TermChanged { get; set; }
+
+    [Parameter] public TItem Item { get; set; }
+    [Parameter] public EventCallback<TItem> ItemChanged { get; set; }
+    [Parameter] public Expression<Func<TItem>> ItemExpression { get; set; }
+    [Parameter] public RenderFragment<TItem> ItemTemplate { get; set; }
+
+    [Parameter] public ICollection<TItem> List { get; set; }
+
+    private bool optionsVisible = false;
+    private bool loading = false;
+    private Timer timer;
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer(1000);
+        timer.AutoReset = false;
+        timer.Elapsed += TimeElapsed;
+    }
+
+    private void TimeElapsed(Object source, ElapsedEventArgs e)
+    {
+        InvokeAsync(async () =>
+        {
+            await TermChanged.InvokeAsync(Term);
+            loading = false;
+            StateHasChanged();
+        });
+    }
+
+    private void OnTermChanged(ChangeEventArgs e)
+    {
+        timer.Stop();
+        Term = (string)e.Value;
+        List = null;
+        optionsVisible = true;
+        loading = true;
+        timer.Start();
+    }
+
+    private async Task ChangeItem(TItem item)
+    {
+        Item = item;
+        CloseOptions();
+        await ItemChanged.InvokeAsync(item);
+    }
+
+    private async Task OnFocus()
+    {
+        optionsVisible = true;
+        await TermChanged.InvokeAsync(Term);
+    }
+
+    private void CloseOptions()
+    {
+        optionsVisible = false;
+    }
+}

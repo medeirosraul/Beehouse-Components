@@ -1,10 +1,12 @@
-﻿<button class="btn @GetStyle()" @onclick="OnClick">@ChildContent</button>
+﻿<button @attributes="InputAttributes" class="btn @GetStyle() @GetSize() @GetClasses()" @onclick="OnClick">@ChildContent</button>
 
 @code {
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; }
     [Parameter] public ElementStyle Style { get; set; } = ElementStyle.Primary;
     [Parameter] public ElementSize Size { get; set; } = ElementSize.Medium;
     [Parameter] public RenderFragment ChildContent { get; set; }
-    [Parameter] public EventCallback OnClick { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     private string GetStyle()
     {
@@ -20,5 +22,28 @@
             case ElementStyle.Dark: return "btn-dark";
             default: return "btn-primary";
         }
+    }
+
+    private string GetSize()
+    {
+        switch (Size)
+        {
+            case ElementSize.ExtraSmall: return "btn-xs";
+            case ElementSize.Small: return "btn-sm";
+            case ElementSize.Medium: return "btn-md";
+            case ElementSize.Large: return "btn-lg";
+            case ElementSize.ExtraLarge: return "btn-xl";
+            default: return "";
+        }
+    }
+
+    private string GetClasses()
+    {
+        if (InputAttributes != null && InputAttributes.ContainsKey("class"))
+        {
+            return InputAttributes["class"].ToString();
+        }
+
+        return "";
     }
 }

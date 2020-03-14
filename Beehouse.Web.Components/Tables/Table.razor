@@ -1,0 +1,58 @@
+﻿@using Beehouse.Essentials.Util
+@typeparam TModel
+<Row>
+    <Column>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                @if (!string.IsNullOrWhiteSpace(Title))
+                {
+                    <tr>
+                        <th colspan="100"><h4>@Title</h4></th>
+                    </tr>
+                }
+                <tr>
+                    @Header
+                    @if (ActionsTemplate != null)
+                    {
+                        <th width="150px" class="text-right">Ações</th>
+                    }
+                </tr>
+            </thead>
+            @if (!Any())
+            {
+                <tbody>
+                    <tr>
+                        <td colspan="100"><p class="text-muted">Não contém itens nessa lista.</p></td>
+                    </tr>
+                </tbody>
+            }
+            else
+            {
+                <tbody>
+
+                    @foreach (var item in Context)
+                    {
+                        <tr>
+                            @RowTemplate(item)
+                            @if (ActionsTemplate != null)
+                            {
+                                <td class="text-right">
+                                    @ActionsTemplate(item)
+                                </td>
+
+                            }
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="100">
+                            <Pagination Page="@Context.PageIndex" PageChanged="@OnPageChanged" Limit="@Context.PageSize" Count="@Context.TotalCount" />
+                        </td>
+                    </tr>
+                </tfoot>
+            }
+
+        </table>
+    </Column>
+</Row>

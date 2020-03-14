@@ -7,6 +7,7 @@ namespace Beehouse.Web.Components.Common
     public enum ElementValueType
     {
         Text,
-        Number
+        Number,
+        Money
     }
 }

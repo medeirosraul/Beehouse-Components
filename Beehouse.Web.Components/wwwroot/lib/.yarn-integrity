@@ -7,10 +7,12 @@
   "linkedModules": [],
   "topLevelPatterns": [
     "bootstrap@^4.3.1",
+    "jquery-mask-plugin@^1.14.16",
     "jquery@^3.4.1"
   ],
   "lockfileEntries": {
     "bootstrap@^4.3.1": "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.3.1.tgz#280ca8f610504d99d7b6b4bfc4b68cec601704ac",
+    "jquery-mask-plugin@^1.14.16": "https://registry.yarnpkg.com/jquery-mask-plugin/-/jquery-mask-plugin-1.14.16.tgz#9ebb55947d984da5aade45315b2fe6b113e28aae",
     "jquery@^3.4.1": "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
   },
   "files": [],
