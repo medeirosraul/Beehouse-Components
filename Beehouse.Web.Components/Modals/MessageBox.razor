@@ -1,0 +1,18 @@
+﻿@inject Microsoft.JSInterop.IJSRuntime JSRuntime
+@inject Beehouse.Web.Components.Modals.MessageBoxAccessor MessageBoxAccessor
+
+<div id="modal-message-box" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-message-box-label" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modal-message-box-label" class="modal-title">@Title</h5>
+            </div>
+            <div class="modal-body">
+                <p>@Message</p>
+            </div>
+            <div class="modal-footer">
+                <button @onclick="@ButtonOkClicked" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

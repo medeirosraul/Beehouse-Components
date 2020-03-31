@@ -3,7 +3,50 @@
 window.BeehouseMask = () => {
     BeehouseUnmask();
     console.log("BeehouseMask ----> Applying masks.");
-    $(".money").mask("#.##0,00", { reverse: true });
+    $(".money").mask("#.##0,00",
+        {
+            reverse: true,
+            onKeyPress: function (v, event, currentField, options) {
+                // remove previously added stuff at start of string
+                v = v.replace(/^0*,?0*/, '');
+
+                // add stuff as needed
+                if (v.length == 0) {
+                    v = "0,00";
+                }
+                else if (v.length == 1) {
+                    v = "0,0" + v;
+                }
+                else if (v.length == 2) {
+                    v = "0," + v;
+                }
+                $(currentField).val(v);
+            }
+        });
+
+    $(".number-weight").mask("#.##0,000",
+        {
+            reverse: true,
+            onKeyPress: function (v, event, currentField, options) {
+                // remove previously added stuff at start of string
+                v = v.replace(/^0*,?0*/, '');
+
+                // add stuff as needed
+                if (v.length == 0) {
+                    v = "0,000";
+                }
+                else if (v.length == 1) {
+                    v = "0,00" + v;
+                }
+                else if (v.length == 2) {
+                    v = "0,0" + v;
+                }else if (v.length == 3) {
+                    v = "0," + v;
+                }
+                $(currentField).val(v);
+            }
+        });
+
     $(".number").mask("#.##0,000", { reverse: true });
 }
 

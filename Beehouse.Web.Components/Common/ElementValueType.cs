@@ -8,6 +8,7 @@ namespace Beehouse.Web.Components.Common
     {
         Text,
         Number,
-        Money
+        Money,
+        Weight
     }
 }

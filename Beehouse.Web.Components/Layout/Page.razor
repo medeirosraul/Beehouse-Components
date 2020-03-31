@@ -1,13 +1,14 @@
-﻿<div class="container-fluid page">
-    @if (!string.IsNullOrWhiteSpace(Title))
-    {
-        <Row>
-            <Column Size="12">
-                <h4>@Title</h4>
-            </Column>
-        </Row>
-    }
+﻿<div class="header">
+    <div>
+        <h3>
+            @if (!string.IsNullOrWhiteSpace(Title)){
+                @Title
+            }
+        </h3>
+    </div>
+</div>
 
+<div class="container-fluid page">
     @ChildContent
 </div>
 

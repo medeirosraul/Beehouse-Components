@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Beehouse.Web.Components.Common;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace Beehouse.Web.Components.Forms
     public partial class Search<TModel>
     {
         // internal state
-        private bool _listVisible = false;
-        private bool _loading = false;
+        private bool _listVisible;
+        private bool _loading;
         private int _time = 200;
 
         private Timer _timer;
@@ -21,6 +22,9 @@ namespace Beehouse.Web.Components.Forms
 
         [Parameter] 
         public string Label { get; set; }
+
+        [Parameter] 
+        public ElementSize Size { get; set; }
 
         [Parameter] 
         public string Term { get; set; }
@@ -42,10 +46,40 @@ namespace Beehouse.Web.Components.Forms
         // Events
         [Parameter]
         public EventCallback<string> OnTermChange { get; set; }
+
         [Parameter]
         public EventCallback<TModel> OnItemSelect { get; set; }
+
         [Parameter]
         public EventCallback<TModel> OnItemRemove { get; set; }
+
+        public string LabelSizeClass
+        {
+            get
+            {
+                switch (Size)
+                {
+                    case ElementSize.Small:
+                        return "col-sm-8 col-md-6 col-lg-5 col-xl-4";
+                    default:
+                        return "col-sm-4 col-lg-3 col-xl-2";
+                }
+            }
+        }
+
+        public string InputSizeClass
+        {
+            get
+            {
+                switch (Size)
+                {
+                    case ElementSize.Small:
+                        return "col-sm-4 col-md-6 col-lg-7 col-xl-8";
+                    default:
+                        return "col-sm-8 col-lg-9 col-xl-10";
+                }
+            }
+        }
 
         protected override void OnInitialized()
         {
