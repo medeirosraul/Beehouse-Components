@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Beehouse.Web.Components.Forms
 {
@@ -16,33 +17,11 @@ namespace Beehouse.Web.Components.Forms
         [Parameter] public bool Hidden { get; set; } = false;
         [Parameter] public EventCallback<string> ValueChanged { get; set; }
         [Parameter] public Expression<Func<string>> ValueExpression { get; set; }
+        [Parameter] public EventCallback<string> OnChange { get; set; }
 
-        public string LabelSizeClass
+        private async Task Changed(string value)
         {
-            get
-            {
-                switch (Size)
-                {
-                    case ElementSize.Small:
-                        return "col-sm-8 col-md-6 col-lg-5 col-xl-4";
-                    default:
-                        return "col-sm-4 col-lg-3 col-xl-2";
-                }
-            }
-        }
-
-        public string InputSizeClass
-        {
-            get
-            {
-                switch (Size)
-                {
-                    case ElementSize.Small:
-                        return "col-sm-4 col-md-6 col-lg-7 col-xl-8";
-                    default:
-                        return "col-sm-8 col-lg-9 col-xl-10";
-                }
-            }
+            await OnChange.InvokeAsync(value);
         }
     }
 }

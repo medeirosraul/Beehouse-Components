@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/lib/beehouse/css/BeehouseWebComponents.css",
     "inputFile": "wwwroot/lib/beehouse/css/BeehouseWebComponents.scss"
+  },
+  {
+    "outputFile": "wwwroot/owl/css/components.css",
+    "inputFile": "wwwroot/owl/css/components.scss"
   }
 ]

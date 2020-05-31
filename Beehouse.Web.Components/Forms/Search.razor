@@ -3,40 +3,45 @@
 <div class="form-group row search">
     @if (!string.IsNullOrWhiteSpace(Label))
     {
-        <label class="col-form-label @LabelSizeClass text-right">@Label</label>
+        <label class="col-form-label col text-md-right">@Label</label>
     }
-    <div class="@InputSizeClass">
-        <InputText class="form-control wait-onchange" @bind-Value="@Term" @oninput="@OnInput" @onfocusin="@OnFocusIn" @onfocusout="@OnFocusOut"></InputText>
-        <small class="form-text text-muted">Digite o termo da busca</small>
-        <div class="@(_listVisible ? "visible" : "invisible")" style="overflow:visible; height:5px;">
-            <div class="list-group search-result">
-                @if (_loading)
-                {
-                    <a class="list-group-item" disabled>carregando...</a>
-                }
-                else if (Context == null || Context.Count == 0)
-                {
-                    <a class="list-group-item" disabled>nenhum item encontrado com o termo "@Term"</a>
-                }
-                else
-                {
-                    @foreach (var item in Context)
+    <div class="col-sm-12 col-md">
+        @if((!Multiselect && (Selected == null || Selected.Count == 0)) || (Multiselect))
+        {
+            <InputText class="form-control wait-onchange" @bind-Value="@Term" @oninput="@OnInput" @onfocusin="@OnFocusIn" @onfocusout="@OnFocusOut"></InputText>
+            <small class="form-text text-muted">Digite o termo da busca</small>
+            <div class="@(_listVisible ? "visible" : "invisible")" style="overflow:visible; height:5px;">
+                <div class="list-group search-result">
+                    @if (_loading)
                     {
-                        <a href="#" class="list-group-item list-group-item-action" @onclick="@(async (e) => await ItemSelected(item))" @onclick:preventDefault>@ItemTemplate(item)</a>
+                        <a class="list-group-item" disabled><Loading></Loading></a>
                     }
-                    <div class="list-group-item">
-                        <Button Size="ElementSize.Small" Style="@ElementStyle.Danger" OnClick="@OnCancelClick" type="button">Cancelar</Button>
-                    </div>
-                }
+                    else if (Context == null || Context.Count == 0)
+                    {
+                        <a class="list-group-item text-dark" disabled>nenhum item encontrado com o termo "@Term"</a>
+                    }
+                    else
+                    {
+                        @foreach (var item in Context)
+                        {
+                            <a href="#" class="list-group-item list-group-item-action" @onclick="@(async (e) => await ItemSelected(item))" @onclick:preventDefault>@ItemTemplate(item)</a>
+                        }
+                        <div class="list-group-item">
+                            <Button Size="ElementSize.Small" Style="@ElementStyle.Danger" OnClick="@OnCancelClick" type="button">Cancelar</Button>
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
-        @if (Selected != null && Selected.Count > 0){
-            <ul class="list-group">
+        }
+
+
+        @if (Selected?.Count > 0){
+            <ul class="list-group text-dark">
                 @foreach (var item in Selected)
                 {
                     <li class="list-group-item">
                         @ItemTemplate(item)
-                        <Button Size="ElementSize.Small" Style="@ElementStyle.Danger" OnClick="@(async () => await RemoveSelectedClicked(item))" type="button">Remover</Button>
+                        <Button Size="ElementSize.Small" Style="@ElementStyle.Danger" OnClick="@(async () => await RemoveSelectedClicked(item))" type="button">@RemoveButtonLabel</Button>
                     </li>
                 }
             </ul>

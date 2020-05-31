@@ -2,6 +2,12 @@
 @typeparam TModel
 <Row>
     <Column>
+        @if (Context == null)
+        {
+            <Loading></Loading>
+        }
+        else
+        {
         <table class="table table-hover">
             <thead>
                 @if (!string.IsNullOrWhiteSpace(Title))
@@ -54,5 +60,6 @@
             }
 
         </table>
+        }
     </Column>
 </Row>

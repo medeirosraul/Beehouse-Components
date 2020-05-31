@@ -1,12 +1,13 @@
 ﻿@using Beehouse.Web.Components.Common
 @using System.Linq.Expressions
 
+
 <div class="form-group row @(Hidden ? "d-none" :  "")">
     @if (!string.IsNullOrWhiteSpace(Label))
     {
-        <label class="col-form-label @LabelSizeClass text-right">@Label</label>
+        <label class="col-form-label col text-md-right">@Label</label>
     }
-<div class="@InputSizeClass">
+<div class="col-sm-12 col-md">
 
     @if (Type == ElementValueType.Text)
     {
@@ -28,6 +29,10 @@
             </div>
             <InputText class="form-control money" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression" @attributes="InputAttributes"></InputText>
         </div>
+    } 
+    else if (Type == ElementValueType.Date)
+    {
+        <InputText class="form-control date" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression" @attributes="InputAttributes"></InputText>
     }
 </div>
 </div>

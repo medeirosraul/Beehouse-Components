@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -39,6 +40,8 @@ namespace Beehouse.Web.Components.Forms
         public ICollection<TModel> Selected { get; set; }
         [Parameter]
         public EventCallback<ICollection<TModel>> SelectedChanged { get; set; }
+        [Parameter] 
+        public Expression<Func<ICollection<TModel>>> SelectedExpression { get; set; }
 
         [Parameter] 
         public RenderFragment<TModel> ItemTemplate { get; set; }
@@ -52,6 +55,8 @@ namespace Beehouse.Web.Components.Forms
 
         [Parameter]
         public EventCallback<TModel> OnItemRemove { get; set; }
+
+        public string RemoveButtonLabel => Multiselect ? "Remover" : "Modificar";
 
         public string LabelSizeClass
         {

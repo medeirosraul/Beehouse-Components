@@ -1,4 +1,5 @@
-﻿using Beehouse.Web.Components.Modals;
+﻿using Beehouse.Web.Components.Js;
+using Beehouse.Web.Components.Modals;
 using Beehouse.Web.Components.Services.Icons;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,6 +19,7 @@ namespace Beehouse.Web.Components
             services.Configure(options);
             services.AddSingleton<IconService>();
             services.AddScoped<MessageBoxAccessor>();
+            services.AddScoped<ChartJsInterop>();
             return services;
         }
     }
